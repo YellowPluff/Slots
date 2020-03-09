@@ -2,6 +2,7 @@ package com.example.slots;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView pointsView;
     private SeekBar speedBar;
     private Button startButton, rulesButton;
+    private int points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         speedBar = findViewById(R.id.speedSeekBar);
         startButton = findViewById(R.id.startStopButton);
         rulesButton = findViewById(R.id.rulesButton);
+        points = 0;
     }
 
     public void startSlots(View view) {
@@ -53,5 +56,11 @@ public class MainActivity extends AppCompatActivity {
 //        int seekBarValue = speedBar.getProgress();
 //        startButton.setText("Stop");
 //        Log.w("fatal", seekBarValue+"");
+    }
+
+    public void rulesClicked(View view) {
+        Intent intent = new Intent(this, RulesActivity.class);
+        intent.putExtra("POINTS", points);
+        startActivity(intent);
     }
 }

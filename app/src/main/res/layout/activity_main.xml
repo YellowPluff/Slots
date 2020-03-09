@@ -67,5 +67,6 @@
         android:id="@+id/rulesButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="rulesClicked"
         android:text="Rules" />
 </LinearLayout>

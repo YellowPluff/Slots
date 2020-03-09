@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RulesActivity">
+
+    <TextView
+        android:id="@+id/rulesView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules:\n1. Press Start\n2. Wait until all slots show the same image\n3. Press Stop\n\nPoints:\n1. If all images match, 50 points.\n2. Otherwise, 10 points per cherry\n\nCurrent Points: 0"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
