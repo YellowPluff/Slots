@@ -19,21 +19,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/cherry" />
+            android:background="@layout/image_border"
+            android:src="@drawable/cherry" />
 
         <ImageView
             android:id="@+id/slotViewTwo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/cherry" />
+            android:background="@layout/image_border"
+            android:src="@drawable/cherry" />
 
         <ImageView
             android:id="@+id/slotViewThree"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/cherry" />
+            android:background="@layout/image_border"
+            android:src="@drawable/cherry" />
     </LinearLayout>
 
     <TextView
@@ -68,5 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="rulesClicked"
+
         android:text="Rules" />
 </LinearLayout>

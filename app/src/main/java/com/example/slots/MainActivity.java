@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -20,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Drawable[] images;
     private TextView pointsView;
     private SeekBar speedBar;
+    private int speedOne;
+    private int speedTwo;
+    private int speedThree;
     private Button startButton;
     private int points;
     private Handler handler;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFields();
+        speedBarListener();
     }
 
     private void initFields() {
@@ -48,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         images = new Drawable[]{cherryImage, pearImage, strawberryImage, grapeImage};
         pointsView = findViewById(R.id.pointsView);
         speedBar = findViewById(R.id.speedSeekBar);
+        speedOne = 250;
+        speedTwo = 80;
+        speedThree = 120;
         startButton = findViewById(R.id.startStopButton);
         points = 0;
         handler = new Handler();
@@ -57,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSlots(View view) {
-        /**
-         * Todo
-         * 1. Play with speed
-         */
         if(startButton.getText().toString().equals("Start")) {
             handler.postDelayed(imageChangerOne, 0);
             handler.postDelayed(imageChangerTwo, 0);
@@ -94,13 +98,68 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void speedBarListener() {
+        speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                switch (progress) {
+                    default:
+                    case 10:
+                        setNewSpeed(1);
+                        break;
+                    case 9:
+                        setNewSpeed(1.2);
+                        break;
+                    case 8:
+                        setNewSpeed(1.4);
+                        break;
+                    case 7:
+                        setNewSpeed(1.6);
+                        break;
+                    case 6:
+                        setNewSpeed(1.8);
+                        break;
+                    case 5:
+                        setNewSpeed(2.0);
+                        break;
+                    case 4:
+                        setNewSpeed(2.2);
+                        break;
+                    case 3:
+                        setNewSpeed(2.4);
+                        break;
+                    case 2:
+                        setNewSpeed(2.6);
+                        break;
+                    case 1:
+                        setNewSpeed(2.8);
+                        break;
+                    case 0:
+                        setNewSpeed(3.0);
+                        break;
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
+    private void setNewSpeed(double v) {
+        speedOne = (int) (300 * v);
+        speedTwo = (int) (80 * v);
+        speedThree = (int) (120 * v);
+        Log.w("fatal", speedOne + " " + speedTwo + " " + speedThree);
+    }
+
     private class SlotImageChangerOne implements Runnable {
         @Override
         public void run() {
             Drawable imageToDraw = images[nextImageOne];
             nextImageOne = (nextImageOne == 3) ? 0 : nextImageOne+1;
             slotOne.setImageDrawable(imageToDraw);
-            handler.postDelayed(imageChangerOne, 500);
+            handler.postDelayed(imageChangerOne, speedOne);
         }
     }
     private class SlotImageChangerTwo implements Runnable {
@@ -109,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             Drawable imageToDraw = images[nextImageTwo];
             nextImageTwo = (nextImageTwo == 3) ? 0 : nextImageTwo+1;
             slotTwo.setImageDrawable(imageToDraw);
-            handler.postDelayed(imageChangerTwo, 250);
+            handler.postDelayed(imageChangerTwo, speedTwo);
         }
     }
     private class SlotImageChangerThree implements Runnable {
@@ -118,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             Drawable imageToDraw = images[nextImageThree];
             nextImageThree = (nextImageThree == 3) ? 0 : nextImageThree+1;
             slotThree.setImageDrawable(imageToDraw);
-            handler.postDelayed(imageChangerThree, 400);
+            handler.postDelayed(imageChangerThree, speedThree);
         }
     }
 }
