@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
         speedOne = (int) (300 * v);
         speedTwo = (int) (80 * v);
         speedThree = (int) (120 * v);
-        Log.w("fatal", speedOne + " " + speedTwo + " " + speedThree);
     }
 
     private class SlotImageChangerOne implements Runnable {
