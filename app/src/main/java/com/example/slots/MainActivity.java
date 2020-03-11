@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         pointsView = findViewById(R.id.pointsView);
         speedBar = findViewById(R.id.speedSeekBar);
         startButton = findViewById(R.id.startStopButton);
-        points = 60;
+        points = 0;
         handler = new Handler();
         imageChangerOne = new SlotImageChangerOne();
         imageChangerTwo = new SlotImageChangerTwo();
@@ -57,29 +57,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSlots(View view) {
+        /**
+         * Todo
+         * 1. Play with speed
+         */
         if(startButton.getText().toString().equals("Start")) {
             handler.postDelayed(imageChangerOne, 0);
             handler.postDelayed(imageChangerTwo, 0);
             handler.postDelayed(imageChangerThree, 0);
             startButton.setText("Stop");
         } else {
-            handler.removeCallbacks(imageChangerOne);
-            handler.removeCallbacks(imageChangerTwo);
-            handler.removeCallbacks(imageChangerThree);
+            stopSlots();
             startButton.setText("Start");
         }
-        /**
-         * Todo
-         * 1. Get images to randomize when startButton is pressed and to stop when stop button is pressed
-         * 2. if (nextImageOne == 2) this means slowOne has a cherry and therefore +10 points
-         * 3. Play with speed
-         */
-//        pointsView.setText("Points: 60");
-//        int seekBarValue = speedBar.getProgress();
+    }
 
-//        handler.postDelayed(imageChangerOne, 0);
-//        handler.postDelayed(imageChangerTwo, 0);
-//        handler.postDelayed(imageChangerThree, 0);
+    private void stopSlots() {
+        handler.removeCallbacks(imageChangerOne);
+        handler.removeCallbacks(imageChangerTwo);
+        handler.removeCallbacks(imageChangerThree);
+        int pointsToAdd = 0;
+        if((nextImageOne == nextImageTwo) && (nextImageOne == nextImageThree)) {
+            pointsToAdd = 50;
+        } else {
+            if(nextImageOne == 1) pointsToAdd = pointsToAdd + 10;
+            if(nextImageTwo == 1) pointsToAdd = pointsToAdd + 10;
+            if(nextImageThree == 1) pointsToAdd = pointsToAdd + 10;
+        }
+        points = points + pointsToAdd;
+        pointsView.setText("Points: " + points);
     }
 
     public void rulesClicked(View view) {
@@ -91,34 +97,28 @@ public class MainActivity extends AppCompatActivity {
     private class SlotImageChangerOne implements Runnable {
         @Override
         public void run() {
-            if(handler.hasCallbacks(imageChangerOne)) {
-                Drawable imageToDraw = images[nextImageOne];
-                nextImageOne = (nextImageOne == 3) ? 0 : nextImageOne+1;
-                slotOne.setImageDrawable(imageToDraw);
-                handler.postDelayed(imageChangerOne, 500);
-            }
+            Drawable imageToDraw = images[nextImageOne];
+            nextImageOne = (nextImageOne == 3) ? 0 : nextImageOne+1;
+            slotOne.setImageDrawable(imageToDraw);
+            handler.postDelayed(imageChangerOne, 500);
         }
     }
     private class SlotImageChangerTwo implements Runnable {
         @Override
         public void run() {
-            if(handler.hasCallbacks(imageChangerTwo)) {
-                Drawable imageToDraw = images[nextImageTwo];
-                nextImageTwo = (nextImageTwo == 3) ? 0 : nextImageTwo+1;
-                slotTwo.setImageDrawable(imageToDraw);
-                handler.postDelayed(imageChangerTwo, 250);
-            }
+            Drawable imageToDraw = images[nextImageTwo];
+            nextImageTwo = (nextImageTwo == 3) ? 0 : nextImageTwo+1;
+            slotTwo.setImageDrawable(imageToDraw);
+            handler.postDelayed(imageChangerTwo, 250);
         }
     }
     private class SlotImageChangerThree implements Runnable {
         @Override
         public void run() {
-            if(handler.hasCallbacks(imageChangerThree)) {
-                Drawable imageToDraw = images[nextImageThree];
-                nextImageThree = (nextImageThree == 3) ? 0 : nextImageThree+1;
-                slotThree.setImageDrawable(imageToDraw);
-                handler.postDelayed(imageChangerThree, 400);
-            }
+            Drawable imageToDraw = images[nextImageThree];
+            nextImageThree = (nextImageThree == 3) ? 0 : nextImageThree+1;
+            slotThree.setImageDrawable(imageToDraw);
+            handler.postDelayed(imageChangerThree, 400);
         }
     }
 }
