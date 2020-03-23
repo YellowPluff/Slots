@@ -33,13 +33,47 @@ public class MainActivity extends AppCompatActivity {
     private int nextImageTwo = 2;
     private SlotImageChangerThree imageChangerThree;
     private int nextImageThree = 3;
+    private boolean isRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFields();
+        dealWithBundle(savedInstanceState);
         speedBarListener();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopSpinners();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isRunning) {
+            startSlots(slotOne);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putInt("POINTS", points);
+        bundle.putBoolean("RUNNING", isRunning);
+    }
+
+    private void dealWithBundle(Bundle bundle) {
+        if(bundle == null) {
+            points = 0;
+            isRunning = false;
+        } else {
+            points = bundle.getInt("POINTS");
+            isRunning = bundle.getBoolean("RUNNING");
+            pointsView.setText("Points: " + points);
+        }
     }
 
     private void initFields() {
@@ -62,24 +96,31 @@ public class MainActivity extends AppCompatActivity {
         imageChangerOne = new SlotImageChangerOne();
         imageChangerTwo = new SlotImageChangerTwo();
         imageChangerThree = new SlotImageChangerThree();
+        isRunning = false;
     }
 
     public void startSlots(View view) {
         if(startButton.getText().toString().equals("Start")) {
+            isRunning = true;
             handler.postDelayed(imageChangerOne, 0);
             handler.postDelayed(imageChangerTwo, 0);
             handler.postDelayed(imageChangerThree, 0);
             startButton.setText("Stop");
         } else {
-            stopSlots();
+            isRunning = false;
+            stopSlotsWithPoints();
             startButton.setText("Start");
         }
     }
 
-    private void stopSlots() {
+    private void stopSpinners() {
         handler.removeCallbacks(imageChangerOne);
         handler.removeCallbacks(imageChangerTwo);
         handler.removeCallbacks(imageChangerThree);
+    }
+
+    private void stopSlotsWithPoints() {
+        stopSpinners();
         int pointsToAdd = 0;
         if((nextImageOne == nextImageTwo) && (nextImageOne == nextImageThree)) {
             pointsToAdd = 50;

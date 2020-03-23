@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Rules:\n1. Press Start\n2. Wait until all slots show the same image\n3. Press Stop\n\nPoints:\n1. If all images match, 50 points.\n2. Otherwise, 10 points per cherry\n\nCurrent Points: 0"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
